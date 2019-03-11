@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/component :: component('评论')" />
+<link th:href="@{/css/comment/comment.css}" rel="stylesheet" />
+<body>
+
+<div id="showRecordComment">
+    <div class="layui-row" th:each="rd : ${comment}">
+        <span>
+            <img th:src="${rd.getCreateImage()}" width="50px" height="50px" />
+        </span>
+        <span class="message" th:text="${rd.getCreateName()} + '评论于' + ${rd.formatDate()}"></span>
+        <hr class="layui-bg-red" />
+        <span th:text="${rd.getContent()}"></span>
+    </div>
+
+    <div id="page"></div>
+</div>
+
+</body>
+</html>

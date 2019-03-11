@@ -1,0 +1,13 @@
+#logo {
+    height: auto;
+    width: 200px;
+}
+.navbar {
+    min-height: 78px;
+}
+
+.navbar-nav > li > a{
+    height: 78px;
+    font-size: 18px;
+    line-height: 60px;
+}

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/component :: component('重置密码')" />
+<link th:href="@{/css/user/login.css}" rel="stylesheet" />
+<body>
+<nav th:replace="common/head :: head" />
+
+<div class="panel panel-default">
+    <div class="panel-heading">重置密码</div>
+    <div class="panel-body">
+        <div class="form-group">
+            <input class="form-control" placeholder="请输入用户名" type="text" id="user_reset" />
+        </div>
+        <div class="form-group">
+            <select class="form-control" id="question_reset">
+                <!--/*@thymesVar id="resetQuestion" type="java.util.Map"*/-->
+                <option th:each="question : ${resetQuestion}" th:text="${question.key}"></option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input class="form-control" type="text" id="answer_reset" />
+        </div>
+        <div class="form-group">
+            <input class="form-control" placeholder="请输入新密码" type="password" id="password_reset" />
+        </div>
+        <div class="form-group">
+            <input class="btn btn-primary btn-block" type="submit" id="reset" value="重置密码" />
+        </div>
+        <div class="panel-footer">
+            <a href="/user/login">登录</a>
+            <a href="/user/register">注册</a>
+        </div>
+    </div>
+</div>
+
+<footer th:include="common/footer :: footer" />
+<script th:src="@{/js/user/reset.js}" type="text/javascript" />
+</body>
+</html>

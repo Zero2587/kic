@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.weishilei.mapper.UserMapper">
+    <resultMap id="BaseResultMap" type="User">
+        <result column="question_id" property="questionId" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" javaType="Date" />
+    </resultMap>
+
+    <select id="selectAllUser" resultMap="BaseResultMap">
+            select * from user
+    </select>
+
+    <select id="selectUserById" parameterType="Integer" resultMap="BaseResultMap">
+            select * from user
+            where
+            id = #{id}
+    </select>
+
+    <select id="selectUserByUsername" parameterType="String" resultMap="BaseResultMap">
+            select * from user
+            where
+            username = #{username}
+    </select>
+
+    <insert id="insertUser" parameterType="User" useGeneratedKeys="true" keyProperty="id">
+        insert into user (username, password, name, question_id, answer, signature, photo)
+        values (#{username}, #{password}, #{name}, #{questionId}, #{answer},
+        #{signature}, #{photo})
+    </insert>
+
+    <update id="updateUserPasswordByUsername" parameterType="String">
+        update user
+        set password = #{password} where username = #{username}
+    </update>
+
+    <update id="updateUserImageById">
+        update user
+        set photo = #{image} where id = #{id}
+    </update>
+
+</mapper>

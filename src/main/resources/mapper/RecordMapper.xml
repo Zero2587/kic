@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="top.weishilei.mapper.RecordMapper">
+    <resultMap id="BaseResultMap" type="Record">
+        <result column="user_id" property="userId" />
+        <result column="is_delete" jdbcType="BIT" property="delete" javaType="Boolean" />
+        <result column="create_date" jdbcType="TIMESTAMP" property="createDate" javaType="Date" />
+        <result column="create_name" jdbcType="VARCHAR" property="createName" javaType="String" />
+        <result column="is_comment" jdbcType="BIT" property="comment" javaType="Boolean" />
+        <result column="create_image" jdbcType="VARCHAR" property="createImage" javaType="String" />
+    </resultMap>
+
+    <select id="selectAllRecord" resultMap="BaseResultMap" parameterType="Integer">
+        select * from record
+        <choose>
+            <when test="delete == 0">
+                where is_delete = 0
+            </when>
+            <otherwise>
+                where is_delete = 1
+            </otherwise>
+        </choose>
+        and is_comment = 0
+    </select>
+
+    <select id="selectRecordByUserId" resultMap="BaseResultMap">
+        select * from record
+        <choose>
+            <when test="delete == 0">
+                where is_delete = 0
+            </when>
+            <otherwise>
+                where is_delete = 1
+            </otherwise>
+        </choose>
+        and user_id = #{userId}
+        and is_comment = 0
+    </select>
+
+    <insert id="insertRecord" parameterType="Record" useGeneratedKeys="true" keyProperty="id">
+        insert into record (user_id, content, create_name, create_image, is_comment)
+        values(#{userId}, #{content}, #{createName}, #{createImage}, #{comment})
+    </insert>
+
+    <update id="deleteRecordById" parameterType="Integer" >
+        update record
+        set is_delete = 0
+        where id = #{id}
+    </update>
+
+    <update id="deleteRecordByUserId" parameterType="Integer" >
+        update record
+        set is_delete = 0
+        where user_id = #{userId}
+    </update>
+
+    <insert id="insertRecordComment" parameterType="Record" useGeneratedKeys="true" keyProperty="id">
+        insert into record (user_id, content, create_name, create_image, is_comment, pid)
+        values(#{userId}, #{content}, #{createName}, #{createImage}, #{comment}, #{pid})
+    </insert>
+
+    <select id="selectRecordCommentById" resultMap="BaseResultMap" parameterType="Integer">
+      select * from record
+      where pid = #{id}
+    </select>
+</mapper>
